@@ -8,7 +8,7 @@ const db = require("./models")
 const app = express();
 app.use(cors());
 
-// environment variable PORT or 8300 if unset
+// environment variable PORT or 4000 if unset
 const port = process.env.PORT || 4000;
 
 // Add middleware for parsing the body to req.body
