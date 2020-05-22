@@ -5,10 +5,10 @@ function Navigation() {
   return (
     <Fragment>
       <Navbar bg="dark" variant="dark">
-        <Navbar.Brand href="#home" style={{fontSize: '40px'}}>Filmster</Navbar.Brand>
+        <Navbar.Brand href="/" style={{fontSize: '40px'}}>Filmster</Navbar.Brand>
           <Nav className="mr-auto">
             <Nav.Link href="#features">My movies</Nav.Link>
-            <Nav.Link href="#pricing">Login</Nav.Link>
+            <Nav.Link href="/login">Login</Nav.Link>
           </Nav>
       </Navbar>
     </Fragment>

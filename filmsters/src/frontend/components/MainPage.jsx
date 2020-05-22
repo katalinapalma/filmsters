@@ -6,7 +6,6 @@ import Search from './Search'
     render() {
       return (
         <div>
-            <Navigation />
             <Search />
         </div>
     )
