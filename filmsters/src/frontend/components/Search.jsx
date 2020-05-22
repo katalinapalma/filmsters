@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Form, FormControl, Button, Col } from 'react-bootstrap';
+import { Form, FormControl, Button, } from 'react-bootstrap';
 
 class Search extends Component {
   render() {
