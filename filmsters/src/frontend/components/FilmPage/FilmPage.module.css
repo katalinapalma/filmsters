@@ -1,16 +1,59 @@
+.background {
+  background-image: 
+    /* top, transparent red */
+    linear-gradient(
+      rgba(31, 55, 87, 0.85), 
+      rgba(48, 77, 90, 0.65)
+    ),
+    /* your image */
+    url('https://d2iltjk184xms5.cloudfront.net/uploads/photo/file/280892/654b1c569a9a2b850e8d9c4de3bd8f02-Inception-movie-poster-7.jpg');
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin-top: -70px;
+  padding-bottom: 70px;
+  }
+
 .movieContainer {
   margin-left: 70px;
   margin-top: 70px;
   display: flex;
 }
 
-.divLeft {
-  background-color: green;
-}
-
 .divRight h1 {
   color: #fff;
+  font-weight: bold;
   margin-left: 100px;
   margin-top: 70px;
   font-size: 50px;
+}
+
+.divRight h3 {
+  color: #fff;
+  font-weight: bold;
+  margin-left: 100px;
+  margin-top: 70px;
+} 
+
+.divRight p {
+  color: #fff;
+  font-weight: bold;
+  margin-left: 100px;
+} 
+
+.castH2 {
+  font-size: 40px;
+  color: #000000;
+  margin-left: 70px;
+  margin-top: 100px;
+}
+
+.actors {
+  display: flex;
+  margin-left: 20px;
+}
+
+.overview {
+  width: 800px;
+  font-size: 18px;
 }

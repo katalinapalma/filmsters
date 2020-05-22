@@ -7,7 +7,6 @@ import MainCarousel from './MainCarousel/MainCarousel';
   render() {
     return (
       <div>
-        <Navigation />
         <Search />
         <MainCarousel />
       </div>
