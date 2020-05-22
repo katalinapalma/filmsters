@@ -6,8 +6,8 @@ import Navigation from './frontend/components/Navigation/Navigation';
 function App() {
   return (
     <div className="App">
-      <Navigation />
-      <Routers />
+        <Navigation />
+        <Routers />
     </div>
   );
 }
