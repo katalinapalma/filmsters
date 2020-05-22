@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Navigation from './Navigation/Navigation';
 import Search from './Search/Search';
 import MainCarousel from './MainCarousel/MainCarousel';
 
@@ -7,7 +6,6 @@ import MainCarousel from './MainCarousel/MainCarousel';
   render() {
     return (
       <div>
-        <Navigation />
         <Search />
         <MainCarousel />
       </div>
