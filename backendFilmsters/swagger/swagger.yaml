@@ -1,29 +1,29 @@
 openapi: "3.0.0"
 info:
   version: 1.0.0
-  title: Swagger Users
+  title: Swagger Filmster
   description: |
-    Swagger for Users Api
+    Swagger for Filmster Api
     
-    [Link to localhost:3200](http://localhost:3200/swagger.yaml)
+    [Link to localhost:8000](http://localhost:8000/swagger.yaml)
     
     
     
   license:
     name: MIT
 servers:
-  - url: http://localhost:3200
+  - url: http://localhost:8000
 paths:
-  /Users:
+  /user:
     get:
       summary: List all Users or search by query parameter
       operationId: listUsers
       tags:
-        - Users
+        - User
       parameters:
         - in: query
-          description: search for Users by query parameter Title
-          name: Title
+          description: search for user by query parameter email
+          name: email
           schema:
             type: string
       responses:
@@ -43,7 +43,7 @@ paths:
       summary: Create a User
       operationId: createUser
       tags:
-      - Users
+      - User
       requestBody:
         description: the User to create
         required: true
@@ -64,14 +64,14 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /Users/{UserId}:
+  /user/{userId}:
     get:
       summary: Info for a specific User
       operationId: showUserById
       tags:
-        - Users
+        - User
       parameters:
-        - name: UserId
+        - name: userId
           in: path
           required: true
           description: The id of the User to retrieve
@@ -84,8 +84,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ResponseUser"
-        '404':      
-          description: User not found
         default:
           description: unexpected error
           content:
@@ -96,9 +94,9 @@ paths:
       summary: Update a specific User
       operationId: updateUserByID
       tags:
-        - Users
+        - User
       parameters:
-      - name: UserId
+      - name: userId
         in: path
         required: true
         description: The id of the User to retrieve
@@ -118,6 +116,14 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ResponseUser"
+        '201': 
+          description: created a new user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseUser"
+        '204': 
+          description: nothing was changed
         default:
           description: unexpected error
           content:
@@ -128,9 +134,9 @@ paths:
       summary: Delete a specific User
       operationId: deleteUserByID
       tags: 
-        - Users
+        - User
       parameters: 
-      - name: UserId
+      - name: userId
         in: path
         required: true
         description: Deletes the User
@@ -143,8 +149,8 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ResponseUser"
-        '404':      
-          description: User not found
+        '404':
+          description: No change (nothing was deleted)
         default:
           description: unexspected error
           content:
@@ -155,25 +161,16 @@ components:
   schemas:
     User:
       properties:
-        ISBN: 
+        firstname: 
           type: string
-        Title: 
+        lastname: 
           type: string
-        Author: 
+        password: 
           type: string
-        Price: 
-          type : number
-        SellerEmail: 
-          type: string
-        Used: 
-          type: boolean
-        Location: 
-          type: object
-          properties:
-            City: 
-              type: string
-            Street: 
-              type: string
+        movies:
+          type: array
+          items:
+           type: string
     ResponseUser:
       allOf:
       - $ref: '#/components/schemas/User'

@@ -67,7 +67,7 @@ deleteUser = (req, res, next) => {
   User.findByIdAndDelete(req.params.id).then((deleted) => {
     if (deleted)
       return res.send(deleted).status(200)
-    res.sendStatus(204)
+    res.sendStatus(404)
   }).catch((error) => next(error))
 }
 

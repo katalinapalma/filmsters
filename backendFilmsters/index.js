@@ -9,7 +9,7 @@ const app = express();
 app.use(cors());
 
 // environment variable PORT or 8300 if unset
-const port = process.env.PORT || 8000;
+const port = process.env.PORT || 4000;
 
 // Add middleware for parsing the body to req.body
 // middlewares are executed in the order added, so add before routes
@@ -36,7 +36,7 @@ var options = {
     urls: [
       {
         url: '/swagger.yaml',
-        name: 'Spec1'
+        name: 'filmster-user'
       }
     ]
   }

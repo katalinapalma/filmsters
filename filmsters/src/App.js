@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import MainPage from './frontend/components/MainPage';
 import Routers from './frontend/components/Routers'
-import Navigation from './frontend/components/Navigation';
+import Navigation from './frontend/components/Navigation/Navigation';
 
 function App() {
   return (
