@@ -22,11 +22,15 @@ getUserById = (req, res, next) => {
 
 createUser = (req, res, next) => {
   const body = req.body
-  const user = new User(body)
-  user
-    .save()
-    .then(() => {
-      return res.status(200).send(user)
+  User.create({
+      firstname: body.firstname,
+      lastname: body.lastname,
+      email: body.email,
+      password: body.password,
+      movies: body.movies
+    })
+    .then((user) => {
+      return res.status(201).send(user)
     })
     .catch(error => next(error))
 }
@@ -46,14 +50,17 @@ updateUser = (req, res, next) => {
     upsert: true,
     runvalidators: true,
   }).then((status) => {
-    if (status.upserted)
-      res.status(201)
-    else if (status.nModified)
-      res.status(200).json(body)
-    else
-      res.status(204)
-    res.send()
-  }).catch(error => next(error))
+    User.findById(req.params.id)
+      .then((user) => {
+        if (status.upserted)
+          res.status(201).send(user)
+        else if (status.nModified)
+          res.status(200).send(user)
+        else
+          res.status(204)
+        res.send()
+      }).catch((error) => next(error))
+  })
 }
 
 deleteUser = (req, res, next) => {
