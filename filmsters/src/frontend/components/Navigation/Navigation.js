@@ -1,5 +1,5 @@
-import React, { Fragment } from 'react'
-import {Button, Navbar, Nav, Form, FormControl} from 'react-bootstrap'
+import React, { Fragment } from 'react';
+import { Navbar, Nav } from 'react-bootstrap';
 
 function Navigation() {
   return (
@@ -12,7 +12,6 @@ function Navigation() {
           </Nav>
       </Navbar>
     </Fragment>
-    
   )
 }
 
