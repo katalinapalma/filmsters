@@ -1,0 +1,212 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Swagger Users
+  description: |
+    Swagger for Users Api
+    
+    [Link to localhost:3200](http://localhost:3200/swagger.yaml)
+    
+    
+    
+  license:
+    name: MIT
+servers:
+  - url: http://localhost:3200
+paths:
+  /Users:
+    get:
+      summary: List all Users or search by query parameter
+      operationId: listUsers
+      tags:
+        - Users
+      parameters:
+        - in: query
+          description: search for Users by query parameter Title
+          name: Title
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Array of Users
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/ResponseUsers'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: Create a User
+      operationId: createUser
+      tags:
+      - Users
+      requestBody:
+        description: the User to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseUser'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /Users/{UserId}:
+    get:
+      summary: Info for a specific User
+      operationId: showUserById
+      tags:
+        - Users
+      parameters:
+        - name: UserId
+          in: path
+          required: true
+          description: The id of the User to retrieve
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseUser"
+        '404':      
+          description: User not found
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      summary: Update a specific User
+      operationId: updateUserByID
+      tags:
+        - Users
+      parameters:
+      - name: UserId
+        in: path
+        required: true
+        description: The id of the User to retrieve
+        schema:
+          type: string
+      requestBody:
+       description: the User body to change
+       required: true
+       content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/User'  
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseUser"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+               $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete a specific User
+      operationId: deleteUserByID
+      tags: 
+        - Users
+      parameters: 
+      - name: UserId
+        in: path
+        required: true
+        description: Deletes the User
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Expected respsone to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseUser"
+        '404':      
+          description: User not found
+        default:
+          description: unexspected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    User:
+      properties:
+        ISBN: 
+          type: string
+        Title: 
+          type: string
+        Author: 
+          type: string
+        Price: 
+          type : number
+        SellerEmail: 
+          type: string
+        Used: 
+          type: boolean
+        Location: 
+          type: object
+          properties:
+            City: 
+              type: string
+            Street: 
+              type: string
+    ResponseUser:
+      allOf:
+      - $ref: '#/components/schemas/User'
+      - properties:
+          _id:
+            type: string
+            format: uuid
+          __v:
+            type: integer
+            format: uint32  
+    ResponseUsers:
+      type: array
+      items:
+        $ref: "#/components/schemas/ResponseUser"
+    Error:
+      required:
+        - error
+      properties:
+        error:
+          type: object
+          properties:
+            expose:
+              type: boolean
+            statusCode:
+              type: integer
+              format: uint32
+            status:
+              type: integer
+              format: uint32
+            body:
+              title: body as escaped json
+              type: string
+            type:
+              title: fault desciption
+              type: string
+    
