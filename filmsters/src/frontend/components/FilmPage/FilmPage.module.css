@@ -1,0 +1,16 @@
+.movieContainer {
+  margin-left: 70px;
+  margin-top: 70px;
+  display: flex;
+}
+
+.divLeft {
+  background-color: green;
+}
+
+.divRight h1 {
+  color: #fff;
+  margin-left: 100px;
+  margin-top: 70px;
+  font-size: 50px;
+}
