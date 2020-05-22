@@ -23,7 +23,7 @@ class Login extends Component {
         >
           <Modal.Header closeButton style={{backgroundColor: 'white'}}>
           <Modal.Title style={{backgroundColor: 'white'}}>
-              Login!
+              Login with your Email and Password!
           </Modal.Title>
           </Modal.Header>
           <Modal.Body style={{backgroundColor: 'white'}}>
