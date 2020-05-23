@@ -17,6 +17,7 @@ class FilmPage extends Component {
     this.state = {
       movieObj: this.props.location.state,
     }
+    console.log(this.state.movieObj);
   }
 
   render() {
@@ -30,7 +31,8 @@ class FilmPage extends Component {
               </Card>
             </div>
             <div className={styles.divRight}>
-              <h1>{this.state.movieObj.title}</h1>
+              <h1>{this.state.movieObj.title} ({this.state.movieObj.release_date})</h1> 
+              <h4 className={styles.ratings}>Rating: <strong>{this.state.movieObj.vote_average}</strong></h4>
               <IconContext.Provider value={{ style: { color: '#fff', fontSize: '40px', marginLeft: '100px', marginTop: '20px' } }}>
                 <FaStar />
               </IconContext.Provider>
