@@ -2,11 +2,30 @@
   margin: 0;
 }
 
+body {
+  background-color: #343a40 !important;
+}
+
 .App {
-  background-color: #282c34;
   height: 100vh;
 }
 
 .loginForm{
   background-color: transparent;
+}
+
+.nav-tabs {
+  border-bottom: 2px solid #17a2b8 !important;
+  width: 80%;
+  font-size: 30px;
+}
+
+a {
+  color: #a4b1b3 !important;
+}
+
+.nav-tabs .nav-link.active {
+  color: #17a2b8 !important;
+  background-color: #fff;
+  border-color: #dee2e6 #dee2e6 #fff;
 }

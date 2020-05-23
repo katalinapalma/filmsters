@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+
 import Search from './Search/Search';
 import MainCarousel from './MainCarousel/MainCarousel';
 
