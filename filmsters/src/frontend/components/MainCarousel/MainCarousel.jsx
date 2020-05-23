@@ -25,18 +25,12 @@ import withApiRequests from '../HOC/withApiRequests';
   getMovieObj = () => {
     this.props.getPopularMovies()
     .then(data => {
-      console.log(data);
        this.setState({apiMovieTitle: data.results.map((items) => {
-         console.log(items);
          return items.title
        })})
 
-       this.setState({apiImages: data.results.map((items) => {
-          fetch('https://image.tmdb.org/t/p/w200/' + items.poster_path)          
-          .then(data => {
-            console.log(items.poster_path)
-            console.log('The movie poster ' + data);
-          })
+      this.setState({apiImages: data.results.map((items) => {
+        return 'https://image.tmdb.org/t/p/w200'+items.poster_path
        })})
     })
   }
@@ -47,7 +41,6 @@ import withApiRequests from '../HOC/withApiRequests';
 
   createImgCarousel = () => {  
     let imgList = []
-    console.log(this.state.apiImages);
     
     // const { classes } = this.props;
 
