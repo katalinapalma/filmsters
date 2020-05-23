@@ -32,9 +32,17 @@ import withApiRequests from '../HOC/withApiRequests';
        })})
 
        this.setState({apiImages: data.results.map((items) => {
-         return items.poster_path
+          fetch('https://image.tmdb.org/t/p/w200/' + items.poster_path)          
+          .then(data => {
+            console.log(items.poster_path)
+            console.log('The movie poster ' + data);
+          })
        })})
     })
+  }
+
+  getMoviePoster = () => {
+    
   }
 
   createImgCarousel = () => {  
