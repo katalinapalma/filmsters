@@ -17,6 +17,7 @@ class FilmPage extends Component {
     this.state = {
       movieObj: this.props.location.state,
     }
+    console.log(this.state.movieObj);
   }
 
   render() {
@@ -30,7 +31,8 @@ class FilmPage extends Component {
               </Card>
             </div>
             <div className={styles.divRight}>
-              <h1>{this.state.movieObj.title}</h1>
+              <h1>{this.state.movieObj.title} ({this.state.movieObj.release_date})</h1> 
+              <h4 className={styles.ratings}>Rating: <strong>{this.state.movieObj.vote_average}</strong></h4>
               <IconContext.Provider value={{ style: { color: '#fff', fontSize: '40px', marginLeft: '100px', marginTop: '20px' } }}>
                 <FaStar />
               </IconContext.Provider>
@@ -48,12 +50,23 @@ class FilmPage extends Component {
         <div className={styles.actors}>
           <Card style={{ width: '10rem', marginLeft: '50px', marginTop: '30px'}}>
             <Card.Img variant="top" src="https://i.pinimg.com/originals/c6/45/15/c645150f60a410c0896d731f98045b17.jpg" />
+            <Card.Title>Leonardo DiCaprio</Card.Title>
           </Card>
           <Card style={{ width: '10rem', marginLeft: '20px', marginTop: '30px' }}>
-            <Card.Img variant="top" src="https://i.pinimg.com/736x/f1/8a/f7/f18af71d558c6902e23e131ecfdb5c85.jpg" />
+            <Card.Img variant="top" src="https://www1.pictures.zimbio.com/bg/Denzel+Washington+Book+Eli+Premiere+eD3BK98r9tTl.jpg" />
+            <Card.Title>Denzel Washington</Card.Title>
+          </Card>
+          <Card style={{ width: '10rem', marginLeft: '20px', marginTop: '30px' }}>
+            <Card.Img variant="top" src="https://www.thesun.co.uk/wp-content/uploads/2019/02/NINTCHDBPICT000376325994.jpg" />
+            <Card.Title>Tom Hardy</Card.Title>
           </Card>
           <Card style={{ width: '10rem', marginLeft: '20px', marginTop: '30px' }}>
             <Card.Img variant="top" src="https://d1o2xrel38nv1n.cloudfront.net/files/2014/08/inception-la-premiere-2010-joseph-gordon-levitt-47818.jpg" />
+            <Card.Title>Joseph Gordon-Levitt</Card.Title>
+          </Card>
+          <Card style={{ width: '10rem', marginLeft: '20px', marginTop: '30px' }}>
+            <Card.Img variant="top" src="https://divasanddorks.com/wp-content/uploads/2013/03/angela-bassett-premiere-olympus-has-fallen-02.jpg" />
+            <Card.Title>Angela Bassett</Card.Title>
           </Card>
         </div>
         <h2 className={styles.titlesH2}>Reviews</h2>
