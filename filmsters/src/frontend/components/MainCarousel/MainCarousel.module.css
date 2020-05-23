@@ -3,3 +3,18 @@
   margin-top: 40px;
   margin-left: 50px;
 }
+
+.cardContainer{
+  display: flex;
+  padding-left: 10px;
+  overflow: hidden;
+}
+
+.card{
+  padding-left: 50px;
+}
+
+.movieTitle{
+  color: white;
+  text-shadow: 2px 2px 5px #17a2b8;
+}
