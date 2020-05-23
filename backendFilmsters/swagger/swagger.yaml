@@ -1,0 +1,209 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Swagger Filmster
+  description: |
+    Swagger for Filmster Api
+    
+    [Link to localhost:4000](http://localhost:4000/swagger.yaml)
+    
+    
+    
+  license:
+    name: MIT
+servers:
+  - url: http://localhost:4000
+paths:
+  /user:
+    get:
+      summary: List all Users or search by query parameter
+      operationId: listUsers
+      tags:
+        - User
+      parameters:
+        - in: query
+          description: search for user by query parameter email
+          name: email
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Array of Users
+          content:
+            application/json:    
+              schema:
+                $ref: '#/components/schemas/ResponseUsers'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      summary: Create a User
+      operationId: createUser
+      tags:
+      - User
+      requestBody:
+        description: the User to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResponseUser'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /user/{userId}:
+    get:
+      summary: Info for a specific User
+      operationId: showUserById
+      tags:
+        - User
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: The id of the User to retrieve
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseUser"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      summary: Update a specific User
+      operationId: updateUserByID
+      tags:
+        - User
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        description: The id of the User to retrieve
+        schema:
+          type: string
+      requestBody:
+       description: the User body to change
+       required: true
+       content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/User'  
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseUser"
+        '201': 
+          description: created a new user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseUser"
+        '204': 
+          description: nothing was changed
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+               $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete a specific User
+      operationId: deleteUserByID
+      tags: 
+        - User
+      parameters: 
+      - name: userId
+        in: path
+        required: true
+        description: Deletes the User
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Expected respsone to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseUser"
+        '404':
+          description: No change (nothing was deleted)
+        default:
+          description: unexspected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    User:
+      properties:
+        firstname: 
+          type: string
+        lastname: 
+          type: string
+        password: 
+          type: string
+        movies:
+          type: array
+          items:
+           type: string
+    ResponseUser:
+      allOf:
+      - $ref: '#/components/schemas/User'
+      - properties:
+          _id:
+            type: string
+            format: uuid
+          __v:
+            type: integer
+            format: uint32  
+    ResponseUsers:
+      type: array
+      items:
+        $ref: "#/components/schemas/ResponseUser"
+    Error:
+      required:
+        - error
+      properties:
+        error:
+          type: object
+          properties:
+            expose:
+              type: boolean
+            statusCode:
+              type: integer
+              format: uint32
+            status:
+              type: integer
+              format: uint32
+            body:
+              title: body as escaped json
+              type: string
+            type:
+              title: fault desciption
+              type: string
+    
