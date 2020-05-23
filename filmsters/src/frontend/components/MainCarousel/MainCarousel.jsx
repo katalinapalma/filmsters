@@ -4,6 +4,8 @@ import Carousel from 'react-multi-carousel';
 import "react-multi-carousel/lib/styles.css";
 import { CardDeck, Card } from 'react-bootstrap';
 import withApiRequests from '../HOC/withApiRequests';
+import { withRouter } from 'react-router-dom';
+import { compose } from 'redux';
 
  class MainCarousel extends Component {
    constructor(props){
@@ -13,9 +15,8 @@ import withApiRequests from '../HOC/withApiRequests';
        apiImages: [],
        apiMovieTitle: '',
        apiObj: [],
-     }
-     console.log(this.state.apiImages);
-     
+       apiObjID: [],
+     }     
    }
 
   componentDidMount(){
@@ -25,9 +26,18 @@ import withApiRequests from '../HOC/withApiRequests';
   getMovieObj = () => {
     this.props.getPopularMovies()
     .then(data => {
-       this.setState({apiMovieTitle: data.results.map((items) => {
+       
+      this.setState({apiMovieTitle: data.results.map((items) => {
          return items.title
        })})
+
+       this.setState({apiObj: data.results.map((items) => {
+         return items
+      })})
+
+      this.setState({apiObjID: data.results.map((items) => {
+        return items.id
+     })})
 
       this.setState({apiImages: data.results.map((items) => {
         return 'https://image.tmdb.org/t/p/w200'+items.poster_path
@@ -42,15 +52,14 @@ import withApiRequests from '../HOC/withApiRequests';
   createImgCarousel = () => {  
     let imgList = []
     
-    // const { classes } = this.props;
-
     // Outer loop to create parent
     for (let i = 0; i < 10; i++) {
     //Create the parent and add the listOfChildren
-    //onClick={()=>{this.props.history.push('/recipescreen/'+ this.state.apiID[i], this.state.apiObj[i])}}
       imgList.push(  
         <CardDeck className={styles.card} key={i} >
-          <Card.Img  src={this.state.apiImages[i]}/>
+          <Card.Img  src={this.state.apiImages[i]}
+           onClick={()=>{this.props.history.push('/movies/'+ this.state.apiObjID[i] ,this.state.apiObj[i])}}
+          />
           
           <Card.Title className={styles.movieTitle}>
             {this.state.apiMovieTitle[i]}
@@ -103,4 +112,7 @@ import withApiRequests from '../HOC/withApiRequests';
   }
 }
 
-export default withApiRequests(MainCarousel);
+export default compose(
+  withRouter,
+  withApiRequests
+)(MainCarousel);

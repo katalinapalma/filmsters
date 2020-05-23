@@ -10,7 +10,6 @@ function withApiRequests(WrappedComponent) {
     fetchPopularMovies = () => {
       return fetch(this.BASE_URL + '/movie/popular' + this.API_KEY)
       .then(response => {
-        console.log(response);
         return response.json();
       })
     }

@@ -11,6 +11,14 @@ import Tab from 'react-bootstrap/Tab';
 import styles from '../FilmPage/FilmPage.module.css';
 
 class FilmPage extends Component {
+  constructor(props){
+    super(props);
+
+    this.state = {
+      movieObj: this.props.location.state,
+    }
+  }
+
   render() {
     return (
       <Fragment>
@@ -18,11 +26,11 @@ class FilmPage extends Component {
           <div className={styles.movieContainer}>
             <div className={styles.divLeft}> 
               <Card style={{ width: '30rem', marginTop: '50px'}}>
-                <Card.Img variant="top" src="https://d2iltjk184xms5.cloudfront.net/uploads/photo/file/280892/654b1c569a9a2b850e8d9c4de3bd8f02-Inception-movie-poster-7.jpg" />
+                <Card.Img variant="top" src={'https://image.tmdb.org/t/p/w200'+this.state.movieObj.poster_path} />
               </Card>
             </div>
             <div className={styles.divRight}>
-              <h1>Inception (2010)</h1>
+              <h1>{this.state.movieObj.title}</h1>
               <IconContext.Provider value={{ style: { color: '#fff', fontSize: '40px', marginLeft: '100px', marginTop: '20px' } }}>
                 <FaStar />
               </IconContext.Provider>
@@ -31,9 +39,7 @@ class FilmPage extends Component {
               </IconContext.Provider>
               <h3>Overview</h3>
               <div className={styles.overview}>
-              <p>A thief who steals corporate secrets through the use of dream-sharing technology is given the inverse task of planting an idea into the mind of a C.E.O. </p>
-              <p>Director: Christopher Nolan</p>
-              <p>Writer: Christopher Nolan</p>
+                <p>{this.state.movieObj.overview}</p>
               </div>
             </div>
           </div>
