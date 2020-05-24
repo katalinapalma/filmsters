@@ -13,6 +13,8 @@ import styles from '../FilmPage/FilmPage.module.css';
 class FilmPage extends Component {
   constructor(props){
     super(props);
+    console.log(this.props.location);
+    
 
     this.state = {
       movieObj: this.props.location.state,

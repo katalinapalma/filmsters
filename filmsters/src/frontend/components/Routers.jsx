@@ -4,6 +4,7 @@ import MainPage from './MainPage';
 import Login from './Login';
 import Registration from './Registration';
 import FilmPage from './FilmPage/FilmPage';
+import SearchScreen from './Search/SearchScreen';
 
 
 const Routers = () => (
@@ -12,6 +13,7 @@ const Routers = () => (
     <Route path="/login" component={Login} />
     <Route path="/register" component={Registration} />
     <Route path="/movies" component={FilmPage} />
+    <Route path="/searchScreen" component={SearchScreen} />
   </Switch>
 )
 
