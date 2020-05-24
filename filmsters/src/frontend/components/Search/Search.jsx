@@ -12,7 +12,9 @@ class Search extends Component {
     this.state = {
       inputValue: '',
       searchResults: [],
-    }    
+    }
+    console.log(this.state.searchResults);
+        
   }
 
   getSearchResult = () => {
