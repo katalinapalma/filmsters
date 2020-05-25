@@ -15,40 +15,44 @@ getReviews = (req, res, next) => {
 }
 
 getReviewByMovieId = (req, res, next) => {
-  Review.find({movieId: req.params.movieid}).then((review) => {
+  Review.find({
+    movieId: req.params.movieid
+  }).then((review) => {
     return res.status(200).send(review)
   }).catch((error) => next(error))
 }
 
 postReview = (req, res, next) => {
   const body = req.body
-  
+
   Review.updateOne({
-    movieId: req.params.movieid}, 
-      {$push: { 
-        reviews: {
-          name: body.name,
-          text:body.text
-        }
+    movieId: req.params.movieid
+  }, {
+    $push: {
+      reviews: {
+        name: body.name,
+        text: body.text
       }
-    },{
-      new: true,
-      upsert: true,
-      runvalidators: true,
-    }).then((status) => {
-      console.log("status: ", status)
-      if (status.upserted) {
-        res.status(201)
-       } else if (status.nModified) {
-        res.status(200)
-       } else {
-        res.status(204)
-      }
-      Review.findOne({movieId: req.params.movieid}).then((reviews) => {
-        res.send(reviews)
-      })
-    }).catch((error) => next(error))
-  }
+    }
+  }, {
+    new: true,
+    upsert: true,
+    runvalidators: true,
+  }).then((status) => {
+    if (status.upserted) {
+      res.status(201)
+    } else if (status.nModified) {
+      res.status(200)
+    } else {
+      res.status(204)
+    }
+    Review.findOne({
+      movieId: req.params.movieid
+    }).then((reviews) => {
+      res.send(reviews)
+    })
+  }).catch((error) => next(error))
+}
 
 
 deleteReview = (req, res, next) => {

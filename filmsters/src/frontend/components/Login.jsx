@@ -4,15 +4,14 @@ import { Link } from 'react-router-dom';
 import withApiRequests from '../components/HOC/withApiRequests';
 
 class Login extends Component {
-    constructor(props){
-        super(props);
-
-        this.state = {
-            showModal: true,
-            emailInput:{ value : '', valid : false },
-            passwordInput:{ value : '', valid : false },
-            usersEmail:[]
-        }
+  constructor(props){
+    super(props);
+    this.state = {
+      showModal: true,
+      emailInput:{ value : '', valid : false },
+      passwordInput:{ value : '', valid : false },
+      users:[]
+      }
     }
 
   handleInputChange = (event) => {
@@ -22,8 +21,8 @@ class Login extends Component {
   componentDidMount(){
     this.props.getUser()
     .then(data=>{
-      this.setState({usersEmail:data.map((items)=>{
-        return items.email
+      this.setState({users:data.map((items)=>{
+        return items
       })})
     })
     
@@ -34,16 +33,19 @@ class Login extends Component {
     
   login = (event) => {
     event.preventDefault();
-    console.log(this.state.usersEmail);
+    console.log(this.state.users);
+    
+    
     
     
     event.target.className += " was-validated";
 
-    if( this.state.emailInput.valid === true & this.state.emailInput===this.state.usersEmail){
-        
-      this.props.history.push('/');
-      
-    }
+   
+    if( this.state.emailInput.valid === true & this.state.passwordInput.valid === true  )
+    if( this.state.users.find(user => user.email === this.state.emailInput.value) )
+    if( this.state.users.find(user => user.password === this.state.passwordInput.value)){
+        this.props.history.push('/'); 
+      }
   }
 
   render() {
@@ -73,7 +75,7 @@ class Login extends Component {
                       required
                       onChange={this.handleInputChange}
                       placeholder="Enter email" />
-                    <div className="valid-feedback">Looks good!</div>  
+                    <div className="valid-feedback">Looks good!</div> 
                   </Form.Group>
 
                   <Form.Group className="loginForm" controlId="formBasicPassword">
