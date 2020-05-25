@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { Form, FormControl, Button } from 'react-bootstrap';
+import { Form, FormControl, Button, CardDeck } from 'react-bootstrap';
 import { Card } from 'react-bootstrap';
 import styles from '../Search/Search.module.css';
 import withApiRequests from '../HOC/withApiRequests';
 import { Link, withRouter } from 'react-router-dom';
 import { compose } from 'redux';
+import Carousel from 'react-multi-carousel';
 
 class Search extends Component {
   constructor(props){
@@ -12,25 +13,71 @@ class Search extends Component {
 
     this.state = {
       inputValue: '',
-      searchResults: [],
-      search: [],
+      searchResultsImage: [],
+      searchResultObj: [],
+      searchResultId: [],
     }
-    console.log('search', this.state.searchResults);
   }
 
   getSearchResult = () => {
     this.props.getSearchMovie(this.state.inputValue)
       .then(response => {
-        this.setState({searchResults: 
-          response.results.map((items) => {
-          console.log('items', items.title);
-          this.state.search.push(items.title);
-          // this.props.history.push('/searchScreen/' + items);
+        
+        this.setState({searchResultsImage: response.results.map((items) => {
+          return 'https://image.tmdb.org/t/p/w200'+items.poster_path
         })})
+
+        this.setState({searchResultId: response.results.map((items) => {
+          return items.id
+        })})
+
+        this.setState({searchResultObj: response.results.map((items) => {
+          return items
+        })})
+
       })
   }
 
+  createImgFromSearch = () => {  
+    let imgList = []
+    
+    // Outer loop to create parent
+    for (let i = 0; i < 10; i++) {
+    //Create the parent and add the listOfChildren
+      imgList.push(  
+        <CardDeck className={styles.card} key={i} >
+          <Card.Img  src={this.state.searchResultsImage[i]}
+            onClick={()=>{this.props.history.push('/movies/'+ this.state.searchResultId[i] ,this.state.searchResultObj[i])}}
+          />
+        </CardDeck>
+      )
+    }    
+    return imgList;
+  }
+
   render() {
+
+    const responsive = {
+      superLargeDesktop: {
+        breakpoint: { max: 4000, min: 3000 },
+        items: 5,
+        partialVisibilityGutter: 40
+      },
+      desktop: {
+        breakpoint: { max: 3000, min: 1024 },
+        items: 5,
+      },
+      tablet: {
+        breakpoint: { max: 1024, min: 464 },
+        items: 3,
+      },
+      mobile: {
+        breakpoint: { max: 464, min: 0 },
+        items: 2,
+        partialVisibilityGutter: 30
+      },
+    };
+
     return (
       <div>
         <div className={styles.headerImage}>
@@ -66,9 +113,19 @@ class Search extends Component {
             </Form>
           </div>
         </div>
-        <h1>
-          {this.state.search.map((item, i) => <Card key={i}>{item}</Card>)}
-        </h1>
+        
+        <h1 className={styles.searchHeader}>Your Search Result</h1>
+        <Carousel
+              responsive={responsive}
+              arrows={true}
+              autoPlay
+              autoPlaySpeed={2000}
+              infinite
+              draggable={false}
+              partialVisible={true}
+              >
+              {this.createImgFromSearch()}
+        </Carousel>
       </div>
     )
   }

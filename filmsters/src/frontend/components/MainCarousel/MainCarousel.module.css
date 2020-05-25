@@ -4,12 +4,6 @@
   margin-left: 50px;
 }
 
-.cardContainer{
-  display: flex;
-  padding-left: 10px;
-  overflow: hidden;
-}
-
 .card{
   padding-left: 50px;
 }
