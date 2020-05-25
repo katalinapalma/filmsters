@@ -33,12 +33,22 @@ function withApiRequests(WrappedComponent) {
       })
     }
 
+    getUser = () => {
+      const url = "http://localhost:4000/user";
+      return fetch(url)
+      .then(response => {
+        console.log(response);
+        return response.json();
+      })
+    }
+
     render() {
       return(
         <WrappedComponent 
           getPopularMovies={this.fetchPopularMovies}
           getSearchMovie={this.fetchSearchMovies}
           postUser={this.postUser}
+          getUser={this.getUser}
           {...this.props}
         />
       )

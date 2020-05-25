@@ -1,9 +1,11 @@
 mongoose = require('mongoose');
 
 const reviewSchema = new mongoose.Schema({
-  movietitle: String,
-  name: String,
-  review: String,
+  movieId: Number,
+  reviews:[{
+    name: String,
+    text: String,
+  }]
 });
 
 const Review = mongoose.model('Review', reviewSchema);
