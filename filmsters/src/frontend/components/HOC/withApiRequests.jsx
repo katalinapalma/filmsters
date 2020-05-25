@@ -22,11 +22,23 @@ function withApiRequests(WrappedComponent) {
       })
     }
 
+    postUser = (newUser) => {
+      const url = "http://localhost:4000/user";
+      fetch((url), {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newUser),
+      })
+    }
+
     render() {
       return(
         <WrappedComponent 
           getPopularMovies={this.fetchPopularMovies}
           getSearchMovie={this.fetchSearchMovies}
+          postUser={this.postUser}
           {...this.props}
         />
       )
