@@ -13,11 +13,20 @@ function withApiRequests(WrappedComponent) {
         return response.json();
       })
     }
+    
+    fetchSearchMovies = (searchValue) => {
+      return fetch(this.BASE_URL + '/search/movie'+ this.API_KEY + '&query=' + searchValue)
+      .then(response => {
+        console.log(response);
+        return response.json();
+      })
+    }
 
     render() {
       return(
         <WrappedComponent 
           getPopularMovies={this.fetchPopularMovies}
+          getSearchMovie={this.fetchSearchMovies}
           {...this.props}
         />
       )

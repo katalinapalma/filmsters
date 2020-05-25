@@ -45,10 +45,6 @@ import { compose } from 'redux';
     })
   }
 
-  getMoviePoster = () => {
-    
-  }
-
   createImgCarousel = () => {  
     let imgList = []
     
