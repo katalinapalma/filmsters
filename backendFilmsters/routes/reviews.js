@@ -2,9 +2,9 @@ const Review = require('../models/reviews')
 
 getReviews = (req, res, next) => {
   var query;
-  if (req.query.email) {
+  if (req.query.movieId) {
     query = Review.find({
-      movietitle: req.query.movietitle
+      movieId: req.query.movieId
     })
   } else {
     query = Review.find()
@@ -14,24 +14,42 @@ getReviews = (req, res, next) => {
   }).catch((error) => next(error))
 }
 
-getReviewById = (req, res, next) => {
-  Review.findById(req.params.id).then((review) => {
+getReviewByMovieId = (req, res, next) => {
+  Review.find({movieId: req.params.movieid}).then((review) => {
     return res.status(200).send(review)
   }).catch((error) => next(error))
 }
 
 postReview = (req, res, next) => {
   const body = req.body
-  Review.create({
-      movietitle: body.movietitle,
-      name: body.name,
-      review: body.review,
-    })
-    .then((review) => {
-      return res.status(201).send(review)
-    })
-    .catch(error => next(error))
-}
+  
+  Review.updateOne({
+    movieId: req.params.movieid}, 
+      {$push: { 
+        reviews: {
+          name: body.name,
+          text:body.text
+        }
+      }
+    },{
+      new: true,
+      upsert: true,
+      runvalidators: true,
+    }).then((status) => {
+      console.log("status: ", status)
+      if (status.upserted) {
+        res.status(201)
+       } else if (status.nModified) {
+        res.status(200)
+       } else {
+        res.status(204)
+      }
+      Review.findOne({movieId: req.params.movieid}).then((reviews) => {
+        res.send(reviews)
+      })
+    }).catch((error) => next(error))
+  }
+
 
 deleteReview = (req, res, next) => {
   Review.findByIdAndDelete(req.params.id).then((deleted) => {
@@ -43,7 +61,7 @@ deleteReview = (req, res, next) => {
 
 module.exports = {
   getReviews,
-  getReviewById,
+  getReviewByMovieId,
   postReview,
   deleteReview
 }

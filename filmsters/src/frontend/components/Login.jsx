@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Modal, Form, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import withApiRequests from '../components/HOC/withApiRequests';
 
 class Login extends Component {
     constructor(props){
@@ -8,15 +9,50 @@ class Login extends Component {
 
         this.state = {
             showModal: true,
+            emailInput:{ value : '', valid : false },
+            passwordInput:{ value : '', valid : false },
+            usersEmail:[]
         }
     }
 
+  handleInputChange = (event) => {
+    this.setState({ [event.target.name]: { value: event.target.value, valid: !!event.target.value } });
+  }
+
+  componentDidMount(){
+    this.props.getUser()
+    .then(data=>{
+      this.setState({usersEmail:data.map((items)=>{
+        return items.email
+      })})
+    })
+    
+  }
+
+
+  
+    
+  login = (event) => {
+    event.preventDefault();
+    console.log(this.state.usersEmail);
+    
+    
+    event.target.className += " was-validated";
+
+    if( this.state.emailInput.valid === true & this.state.emailInput===this.state.usersEmail){
+        
+      this.props.history.push('/');
+      
+    }
+  }
+
   render() {
+  const { emailInput, passwordInput, showModal } = this.state;
     return (
       <div>
         <Modal
           size="lg"
-          show={this.state.showModal}
+          show={showModal}
             onHide={() => {
               this.setState({showModal: false})
           }}
@@ -27,18 +63,32 @@ class Login extends Component {
           </Modal.Title>
           </Modal.Header>
           <Modal.Body style={{backgroundColor: 'white'}}>
-              <Form className="loginForm">
+              <Form noValidate className="loginForm" onSubmit={this.login}>
                   <Form.Group controlId="formBasicEmail" className="loginForm">
-                      <Form.Label className="loginForm">Email address</Form.Label>
-                      <Form.Control type="email" placeholder="Enter email" />
+                    <Form.Label className="loginForm">Email address</Form.Label>
+                    <Form.Control 
+                      type='email'
+                      name="emailInput"
+                      value={emailInput.value}
+                      required
+                      onChange={this.handleInputChange}
+                      placeholder="Enter email" />
+                    <div className="valid-feedback">Looks good!</div>  
                   </Form.Group>
 
                   <Form.Group className="loginForm" controlId="formBasicPassword">
-                      <Form.Label className="loginForm">Password</Form.Label>
-                      <Form.Control type="password" placeholder="Password" />
+                    <Form.Label className="loginForm">Password</Form.Label>
+                    <Form.Control 
+                      type="password"
+                      name="passwordInput"
+                      required
+                      value={passwordInput.value}
+                      onChange={this.handleInputChange} 
+                      placeholder="Password" />
+                    <div className="valid-feedback">Looks good!</div>
                   </Form.Group>
                   <Button variant="primary" type="submit">
-                      Submit
+                      Login
                   </Button>
                   <Form.Text className="loginForm">Dont have an account? <Link to="/register">Sign one Here</Link></Form.Text>
               </Form>
@@ -49,4 +99,4 @@ class Login extends Component {
   }
 }
 
-export default Login;
+export default withApiRequests (Login);

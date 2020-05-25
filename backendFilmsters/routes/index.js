@@ -11,8 +11,8 @@ router.put("/user/:id", user.updateUser)
 router.delete("/user/:id", user.deleteUser)
 
 router.get("/review", review.getReviews)
-router.get("/review/:id", review.getReviewById)
-router.post("/review", review.postReview)
-router.delete("/review/:id", review.deleteReview)
+router.get("/review/:movieid", review.getReviewByMovieId)
+router.post("/review/:movieid", review.postReview)
+router.delete("/review/:movieid", review.deleteReview)
 
 module.exports = router
