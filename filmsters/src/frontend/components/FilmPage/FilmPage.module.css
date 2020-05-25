@@ -46,6 +46,10 @@
   margin-top: 70px;
 }
 
+.titleH3{
+  color: white;
+}
+
 .actors {
   display: flex;
   margin-left: 20px;

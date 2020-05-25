@@ -109,7 +109,7 @@ class FilmPage extends Component {
         <Tab eventKey="profile" title="Your Review">  
           <Card style={{ 
             width: '50%', 
-            height: '550px', 
+            height: '750px', 
             marginTop: '30px', 
             marginBottom: '100px', 
             padding: '20px', 
@@ -117,6 +117,9 @@ class FilmPage extends Component {
             boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)'
           }}>
             <Card.Body>
+            <label className={styles.labelsReviews}>Movie Title:</label>
+              <h3 className={styles.titleH3}>{this.state.movieObj.title}</h3>
+              
               <label className={styles.labelsReviews}>Name:</label>
               <InputGroup className="mb-3">
                 <InputGroup.Prepend>
