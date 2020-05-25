@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Form, FormControl, Button } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 import styles from '../Search/Search.module.css';
 import withApiRequests from '../HOC/withApiRequests';
 import { Link, withRouter } from 'react-router-dom';
@@ -12,18 +13,19 @@ class Search extends Component {
     this.state = {
       inputValue: '',
       searchResults: [],
+      search: [],
     }
-    console.log(this.state.searchResults);
-        
+    console.log('search', this.state.searchResults);
   }
 
   getSearchResult = () => {
     this.props.getSearchMovie(this.state.inputValue)
       .then(response => {
-        console.log(response.results);
-        this.setState({searchResults: response.results.map((items) => {
-          console.log(items);
-          this.props.history.push('/searchScreen/' + items);
+        this.setState({searchResults: 
+          response.results.map((items) => {
+          console.log('items', items.title);
+          this.state.search.push(items.title);
+          // this.props.history.push('/searchScreen/' + items);
         })})
       })
   }
@@ -64,6 +66,9 @@ class Search extends Component {
             </Form>
           </div>
         </div>
+        <h1>
+          {this.state.search.map((item, i) => <Card key={i}>{item}</Card>)}
+        </h1>
       </div>
     )
   }
