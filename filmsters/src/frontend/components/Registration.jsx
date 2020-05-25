@@ -13,7 +13,6 @@ class Registration extends Component {
         lastnameInput:{ value : '', valid : false },
         emailInput:{ value : '', valid : false },
         passwordInput:{ value : '', valid : false },
-
     }
 }
 
@@ -36,7 +35,8 @@ addUser = (event) => {
       email: this.state.emailInput.value,
       password: this.state.passwordInput.value
       }
-    this.props.postUser(this.newUser);}
+    this.props.postUser(this.newUser);
+  }
 }
 
 render() {
@@ -46,9 +46,7 @@ render() {
       <Modal
         size="lg"
         show={showModal}
-        onHide={() => {
-          this.setState({showModal: false})
-      }}
+        onHide={() => { this.setState({showModal: false})}}
       >
         <Modal.Header closeButton style={{backgroundColor: 'white'}}>
         <Modal.Title style={{backgroundColor: 'white'}}>
@@ -70,7 +68,6 @@ render() {
                 <div className="valid-feedback">Looks good!</div>
             </Form.Group>
             
-
             <Form.Group controlId="formBasicLastName" className="loginForm">
                 <Form.Label className="loginForm">Last Name</Form.Label>
                 <Form.Control 
@@ -83,8 +80,6 @@ render() {
                 <div className="valid-feedback">Looks good!</div>
             </Form.Group>
             
-
-
             <Form.Group controlId="formBasicEmail" className="loginForm">
                 <Form.Label className="loginForm">Email address</Form.Label>
                 <Form.Control 
@@ -108,7 +103,6 @@ render() {
                   placeholder="Password" />
                 <div className="valid-feedback">Looks good!</div>  
             </Form.Group>
-
 
             <Button variant="primary" type="submit"  >
                 Create
