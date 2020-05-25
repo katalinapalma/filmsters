@@ -8,6 +8,8 @@ import { Button } from 'react-bootstrap';
 import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab';
 
+import Rating from './Rating';
+
 import styles from '../FilmPage/FilmPage.module.css';
 
 class FilmPage extends Component {
@@ -19,7 +21,6 @@ class FilmPage extends Component {
     this.state = {
       movieObj: this.props.location.state,
     }
-    console.log(this.state.movieObj);
   }
 
   render() {
@@ -33,18 +34,18 @@ class FilmPage extends Component {
               </Card>
             </div>
             <div className={styles.divRight}>
-              <h1>{this.state.movieObj.title} ({this.state.movieObj.release_date})</h1> 
+              <h1><strong>{this.state.movieObj.title}</strong> ({this.state.movieObj.release_date})</h1> 
               <h4 className={styles.ratings}>Rating: <strong>{this.state.movieObj.vote_average}</strong></h4>
-              <IconContext.Provider value={{ style: { color: '#fff', fontSize: '40px', marginLeft: '100px', marginTop: '20px' } }}>
-                <FaStar />
-              </IconContext.Provider>
-              <IconContext.Provider value={{ style: { color: '#fff', fontSize: '40px', marginLeft: '40px', marginTop: '20px' } }}>
-                <FaHeart />
-              </IconContext.Provider>
+              <div className={styles.ratingStars}>
+                <Rating />
+              </div>
               <h3>Overview</h3>
               <div className={styles.overview}>
                 <p>{this.state.movieObj.overview}</p>
               </div>
+              <IconContext.Provider value={{ style: { color: '#fff', fontSize: '40px', marginLeft: '100px', marginTop: '50px' } }}>
+                <FaHeart />
+              </IconContext.Provider>
             </div>
           </div>
         </div>
@@ -69,6 +70,10 @@ class FilmPage extends Component {
           <Card style={{ width: '10rem', marginLeft: '20px', marginTop: '30px' }}>
             <Card.Img variant="top" src="https://divasanddorks.com/wp-content/uploads/2013/03/angela-bassett-premiere-olympus-has-fallen-02.jpg" />
             <Card.Title>Angela Bassett</Card.Title>
+          </Card>
+          <Card style={{ width: '10rem', marginLeft: '20px', marginTop: '30px' }}>
+            <Card.Img variant="top" src="https://i.pinimg.com/originals/cd/76/78/cd767801cff9cd419af568a18ff11a6a.jpg" />
+            <Card.Title>Ed Westwick</Card.Title>
           </Card>
         </div>
         <h2 className={styles.titlesH2}>Reviews</h2>

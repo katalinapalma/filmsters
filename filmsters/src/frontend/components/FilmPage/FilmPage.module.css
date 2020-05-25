@@ -53,7 +53,7 @@
 
 .overview {
   width: 80%;
-  font-size: 18px;
+  font-size: 23px;
 }
 
 .textareaReviews {
@@ -85,4 +85,9 @@
 .ratings {
   color: #fff;
   margin-left: 100px;
+}
+
+.ratingStars {
+  margin-left: 100px;
+  margin-top: 40px;
 }
