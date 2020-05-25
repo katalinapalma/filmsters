@@ -29,6 +29,16 @@
   font-size: 35px;
 }
 
+.card{
+  width: 200px;
+}
+
+.searchHeader{
+  color: #17a2b8;
+  margin-top: 40px;
+  margin-left: 50px;
+}
+
 .searchBar{
   flex: 0 1 auto;
   position: absolute;

@@ -100,7 +100,7 @@ import { compose } from 'redux';
               infinite
               draggable={false}
               partialVisible={true}
-            >
+              >
               {this.createImgCarousel()}
           </Carousel>
       </Fragment>   
