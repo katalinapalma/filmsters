@@ -4,8 +4,8 @@ import { Navbar, Nav } from 'react-bootstrap';
 function Navigation() {
   return (
     <Fragment>
-      <Navbar bg="dark" variant="dark"  expand="lg" fixed="top">
-        <Navbar.Brand href="/" >Filmster</Navbar.Brand>
+      <Navbar bg="dark" variant="dark" sticky="top">
+        <Navbar.Brand href="/" ><h2>Filmster</h2></Navbar.Brand>
           <Nav className="mr-auto">
             <Nav.Link  href="#features">My movies</Nav.Link>
             <Nav.Link  href="#features">Reviews</Nav.Link>
