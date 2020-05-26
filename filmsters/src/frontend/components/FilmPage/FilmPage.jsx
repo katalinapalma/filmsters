@@ -9,6 +9,7 @@ import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab';
 
 import Rating from './Rating';
+import withApiRequests from '../HOC/withApiRequests';
 
 import styles from '../FilmPage/FilmPage.module.css';
 
@@ -17,10 +18,80 @@ class FilmPage extends Component {
     super(props);
     console.log(this.props.location);
     
-
     this.state = {
       movieObj: this.props.location.state,
+      reviews: [],
+      innerName: [],
+      innerText: [],
+      name: '',
+      text: '',
     }
+  }
+
+  componentDidMount() {
+    this.getReview();
+  }
+
+  getReview = () => {
+    this.props.getReview()
+    .then(data => {
+
+      this.setState({reviews:data.map((items)=>{
+        
+        this.setState({innerName: items.reviews.map((revs) => {
+          return revs.name
+        })})
+
+        this.setState({innerText: items.reviews.map((revs) => {
+          return revs.text
+        })})
+        return items.reviews
+      })})
+    })
+  }
+
+  postReview = () => {
+    this.newReview = {
+      name: this.state.name,
+      text: this.state.text,
+      }
+    this.props.postReview(this.newReview, this.state.movieObj.id);
+  }
+
+  handleInputChange = (event) => {
+    this.setState({ [event.target.name]: event.target.value });
+  }
+
+  reviewName = () => {
+    return this.state.reviews.map((items) => {
+      items.map((review) => {
+        return review.name
+      })
+      return (
+          <Card style={{ 
+            width: '50%', 
+            marginTop: '30px', 
+            marginBottom: '100px', 
+            padding: '20px', 
+            backgroundColor: '#1f2225',
+            boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)'
+          }}>
+            <Card.Body>
+              <h3 className={styles.reviewName}>Written by: {items}</h3>
+              <hr />
+            </Card.Body>
+          </Card>
+      )
+    })
+  }
+
+  reviewText = () => {
+    return this.state.innerText.map((items) => {
+      console.log('reviewtex', items)
+      return (
+        <p>{items}</p>
+      )
+    })
   }
 
   render() {
@@ -80,31 +151,8 @@ class FilmPage extends Component {
         <div className={styles.reviewz}>
         <Tabs defaultActiveKey="home" transition={false} id="noanim-tab-example">
         <Tab eventKey="home" title="Reviews">
-          <Card style={{ 
-            width: '50%', 
-            marginTop: '30px', 
-            marginBottom: '100px', 
-            padding: '20px', 
-            backgroundColor: '#1f2225',
-            boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)'
-          }}>
-            <Card.Body>
-              <h3 className={styles.reviewName}>Written by: Name</h3>
-              <hr />
-              <Card.Text className={styles.reviews}>
-                When I first saw the trailer for this film, I knew that this would attract a lot of attention. 
-                Of course having Leonardo in the lead role helped a lot.
-                From the trailer, I already know some things. Dreams. All about dreams. But what about dreams? Who 
-                are the other people? At first, I didn't really understand what was going on. It was all very confusing
-                to me. But as the movie progresses, I start to understand it and I wanted to watch some more and know 
-                more what will happen in the end. The ending. That was, I think, the most intense ending of a movie in 
-                a year or probably more than a year. People actually screamed when the screen faded. And of course, 
-                people couldn't help but talk about it. It was an open-ended movie where people will have their own endings. 
-                My favorite part was Joseph Gordon's fight scene. I think he has the most fun part in this movie.
-                My rate for this movie is A.
-              </Card.Text>
-            </Card.Body>
-          </Card>
+          {this.reviewName()}  
+          {this.reviewText()}
         </Tab>
         <Tab eventKey="profile" title="Your Review">  
           <Card style={{ 
@@ -122,17 +170,26 @@ class FilmPage extends Component {
               
               <label className={styles.labelsReviews}>Name:</label>
               <InputGroup className="mb-3">
-                <InputGroup.Prepend>
-                </InputGroup.Prepend>
                 <FormControl
+                  type='text'
+                  name="name"
+                  value={this.state.name}
+                  onChange={this.handleInputChange} 
                   placeholder="Name"
                   aria-label="Username"
                   aria-describedby="basic-addon1"
                 />
               </InputGroup>
               <label className={styles.labelsReviews}>Your review:</label>
-              <textarea className={styles.textareaReviews}></textarea>
-              <Button variant="info"  size="lg">Submit</Button>
+              <textarea 
+                className={styles.textareaReviews}
+                type='text'
+                name="text"
+                value={this.state.text}
+                onChange={this.handleInputChange} 
+              >
+              </textarea>
+              <Button onClick={this.postReview} variant="info"  size="lg">Submit</Button>
             </Card.Body>
           </Card>
         </Tab>
@@ -143,6 +200,6 @@ class FilmPage extends Component {
   }
 }
 
-export default FilmPage;
+export default withApiRequests(FilmPage);
 
 

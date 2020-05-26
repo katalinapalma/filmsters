@@ -42,6 +42,25 @@ function withApiRequests(WrappedComponent) {
       })
     }
 
+    getReview = () => {
+      const url = "http://localhost:4000/review";
+      return fetch(url)
+      .then(response => {
+        return response.json();
+      })
+    }
+    
+    postReview = (newReview, id) => {
+      const url = "http://localhost:4000/review/" + id;
+      fetch((url), {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newReview),
+      })
+    }
+
     render() {
       return(
         <WrappedComponent 
@@ -49,6 +68,8 @@ function withApiRequests(WrappedComponent) {
           getSearchMovie={this.fetchSearchMovies}
           postUser={this.postUser}
           getUser={this.getUser}
+          getReview={this.getReview}
+          postReview={this.postReview}
           {...this.props}
         />
       )
