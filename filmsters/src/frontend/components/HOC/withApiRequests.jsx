@@ -42,8 +42,8 @@ function withApiRequests(WrappedComponent) {
       })
     }
 
-    getReview = () => {
-      const url = "http://localhost:4000/review";
+    getReview = (id) => {
+      const url = "http://localhost:4000/review/" + id;
       return fetch(url)
       .then(response => {
         return response.json();

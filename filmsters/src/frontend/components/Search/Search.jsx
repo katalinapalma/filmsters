@@ -3,7 +3,7 @@ import { Form, FormControl, Button, CardDeck } from 'react-bootstrap';
 import { Card } from 'react-bootstrap';
 import styles from '../Search/Search.module.css';
 import withApiRequests from '../HOC/withApiRequests';
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 import { compose } from 'redux';
 import Carousel from 'react-multi-carousel';
 

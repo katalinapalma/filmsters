@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import Card from 'react-bootstrap/Card';
-import { FaHeart, FaStar } from 'react-icons/fa';
+import { FaHeart } from 'react-icons/fa';
 import { IconContext } from "react-icons";
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl'; 
@@ -33,7 +33,7 @@ class FilmPage extends Component {
   }
 
   getReview = () => {
-    this.props.getReview()
+    this.props.getReview(this.state.movieObj.id)
     .then(data => {
 
       this.setState({reviews:data.map((items)=>{
@@ -56,6 +56,7 @@ class FilmPage extends Component {
       text: this.state.text,
       }
     this.props.postReview(this.newReview, this.state.movieObj.id);
+    console.log('success')
   }
 
   handleInputChange = (event) => {
@@ -63,10 +64,10 @@ class FilmPage extends Component {
   }
 
   reviewName = () => {
-    return this.state.reviews.map((items) => {
+    return this.state.reviews.map((items, i) => {
       return items.map((review) => {
       return (
-          <Card style={{ 
+          <Card key={i} style={{ 
             width: '50%', 
             marginTop: '30px', 
             marginBottom: '100px', 
