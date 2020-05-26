@@ -64,9 +64,7 @@ class FilmPage extends Component {
 
   reviewName = () => {
     return this.state.reviews.map((items) => {
-      items.map((review) => {
-        return review.name
-      })
+      return items.map((review) => {
       return (
           <Card style={{ 
             width: '50%', 
@@ -77,20 +75,15 @@ class FilmPage extends Component {
             boxShadow: '0 4px 8px 0 rgba(0,0,0,0.2)'
           }}>
             <Card.Body>
-              <h3 className={styles.reviewName}>Written by: {items}</h3>
+              <h3 className={styles.reviewName}>Written by: {review.name}</h3>
               <hr />
+              <Card.Text className={styles.reviews}>
+                {review.text}
+              </Card.Text>
             </Card.Body>
           </Card>
-      )
-    })
-  }
-
-  reviewText = () => {
-    return this.state.innerText.map((items) => {
-      console.log('reviewtex', items)
-      return (
-        <p>{items}</p>
-      )
+        )
+      })
     })
   }
 
@@ -152,7 +145,6 @@ class FilmPage extends Component {
         <Tabs defaultActiveKey="home" transition={false} id="noanim-tab-example">
         <Tab eventKey="home" title="Reviews">
           {this.reviewName()}  
-          {this.reviewText()}
         </Tab>
         <Tab eventKey="profile" title="Your Review">  
           <Card style={{ 
