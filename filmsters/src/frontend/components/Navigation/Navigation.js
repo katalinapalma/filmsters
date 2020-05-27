@@ -1,7 +1,10 @@
 import React, { Fragment } from 'react';
 import { Navbar, Nav } from 'react-bootstrap';
+import InloggedUser from '../InloggedUser/InloggedUser'
 
 function Navigation() {
+
+
   return (
     <Fragment>
       <Navbar bg="dark" variant="dark" sticky="top">
@@ -10,6 +13,7 @@ function Navigation() {
             <Nav.Link  href="#features">My movies</Nav.Link>
             <Nav.Link  href="#features">Reviews</Nav.Link>
           </Nav>
+          <InloggedUser></InloggedUser>
           <Nav.Link href="/login">Login</Nav.Link>
       </Navbar>
     </Fragment>

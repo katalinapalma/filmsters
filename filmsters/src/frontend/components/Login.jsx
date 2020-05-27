@@ -35,17 +35,30 @@ class Login extends Component {
     event.preventDefault();
     console.log(this.state.users);
     
-    
-    
-    
     event.target.className += " was-validated";
 
-   
-    if( this.state.emailInput.valid === true & this.state.passwordInput.valid === true  )
-    if( this.state.users.find(user => user.email === this.state.emailInput.value) )
-    if( this.state.users.find(user => user.password === this.state.passwordInput.value)){
-        this.props.history.push('/'); 
+    if( this.state.emailInput.valid === true & this.state.passwordInput.valid === true  ) {
+      let user = this.state.users.find(user => user.email === this.state.emailInput.value && user.password === this.state.passwordInput.value)
+
+          this.props.history.push({
+          pathname: '/',
+          state: { user: [user.firstname]}
+          });
+          console.log('login', user.firstname);
+          
       }
+   
+    // if( this.state.emailInput.valid === true & this.state.passwordInput.valid === true  )
+    // if( this.state.users.find(user => user.email === this.state.emailInput.value) )
+    // if( this.state.users.find(user => user.password === this.state.passwordInput.value)){
+    //     this.props.history.push({
+    //       pathname: '/',
+    //       state: { users: users.firstname }
+          
+    //     });
+    //     console.log('get user', this.state.users);
+        
+    //   }
   }
 
   render() {
