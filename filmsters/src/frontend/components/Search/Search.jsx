@@ -16,6 +16,7 @@ class Search extends Component {
       searchResultsImage: [],
       searchResultObj: [],
       searchResultId: [],
+      showTitle: false,
     }
   }
 
@@ -34,7 +35,8 @@ class Search extends Component {
         this.setState({searchResultObj: response.results.map((items) => {
           return items
         })})
-
+        
+        this.setState({showTitle: true})
       })
   }
 
@@ -113,8 +115,7 @@ class Search extends Component {
             </Form>
           </div>
         </div>
-        
-        <h1 className={styles.searchHeader}>Your Search Result</h1>
+        {this.state.showTitle && <h1 className={styles.searchHeader}>Your Search Result</h1>}
         <Carousel
               responsive={responsive}
               arrows={true}
