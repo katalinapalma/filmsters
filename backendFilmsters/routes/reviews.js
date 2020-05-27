@@ -56,7 +56,9 @@ postReview = (req, res, next) => {
 
 
 deleteReview = (req, res, next) => {
-  Review.findByIdAndDelete(req.params.id).then((deleted) => {
+  Review.deleteOne({
+    movieId: req.params.movieid
+  }).then((deleted) => {
     if (deleted)
       return res.send(deleted).status(200)
     res.sendStatus(404)

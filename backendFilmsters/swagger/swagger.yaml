@@ -14,6 +14,124 @@ info:
 servers:
   - url: http://localhost:4000
 paths:
+  /review:
+   get:
+    summary: List all Reviews or search by query parameter
+    operationId: listReviews
+    tags:
+      - Review
+    parameters:
+      - in: query
+        description: search for review by query parameter movieId
+        name: movieId
+        schema:
+          type: string
+    responses:
+      '200':
+        description: Array of Reviews
+        content:
+          application/json:    
+            schema:
+              $ref: '#/components/schemas/ResponseReviews'
+      default:
+        description: unexpected error
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Error'
+  /review/{movieId}: 
+    get:
+      summary: Info for a specific Review
+      operationId: showReviewById
+      tags:
+        - Review
+      parameters:
+        - name: movieId
+          in: path
+          required: true
+          description: The id of the movie to retrieve reviews
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Expected response to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseReview"
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      summary: Delete reviews from a specific movie
+      operationId: deleteReviewsByID
+      tags: 
+        - Review
+      parameters: 
+      - name: movieId
+        in: path
+        required: true
+        description: The id of the movie to delete reviews
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Expected respsone to a valid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseReview"
+        '404':
+          description: No change (nothing was deleted)
+        default:
+          description: unexspected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error' 
+    post:
+      summary: Create a Review
+      operationId: createReviewById
+      tags:
+      - Review
+      parameters: 
+      - name: movieId
+        in: path
+        required: true
+        description: The id of the movie to post review
+        schema:
+          type: string
+      requestBody:
+        description: the Review to create
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Review'
+      responses:
+        '200':
+          description:  updated with a new review for the specific movie
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseReview"
+        '201': 
+          description: created a new Review
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ResponseReview"
+        '204': 
+          description: nothing was changed
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
   /user:
     get:
       summary: List all Users or search by query parameter
@@ -159,6 +277,28 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
+    Review:
+      properties:
+        name: 
+          type: string
+        text: 
+          type: string
+    ResponseReview:
+      allOf:
+      - $ref: '#/components/schemas/Review'
+      - properties:
+          movieId:
+            type: number
+          _id:
+            type: string
+            format: uuid
+          __v:
+            type: integer
+            format: uint32  
+    ResponseReviews:
+      type: array
+      items:
+        $ref: "#/components/schemas/ResponseReview"
     User:
       properties:
         firstname: 
