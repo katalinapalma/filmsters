@@ -21,8 +21,6 @@ class FilmPage extends Component {
     this.state = {
       movieObj: this.props.location.state,
       reviews: [],
-      innerName: [],
-      innerText: [],
       name: '',
       text: '',
     }
@@ -35,18 +33,11 @@ class FilmPage extends Component {
   getReview = () => {
     this.props.getReview(this.state.movieObj.id)
     .then(data => {
-
       this.setState({reviews:data.map((items)=>{
-        
-        this.setState({innerName: items.reviews.map((revs) => {
-          return revs.name
-        })})
-
-        this.setState({innerText: items.reviews.map((revs) => {
-          return revs.text
-        })})
         return items.reviews
       })})
+      console.log(this.state.reviews);
+      
     })
   }
 
@@ -56,7 +47,7 @@ class FilmPage extends Component {
       text: this.state.text,
       }
     this.props.postReview(this.newReview, this.state.movieObj.id);
-    console.log('success')
+    this.getReview()
   }
 
   handleInputChange = (event) => {
@@ -64,10 +55,10 @@ class FilmPage extends Component {
   }
 
   reviewName = () => {
-    return this.state.reviews.map((items, i) => {
+    return this.state.reviews.map((items) => {
       return items.map((review) => {
       return (
-          <Card key={i} style={{ 
+          <Card key={review._id} style={{ 
             width: '50%', 
             marginTop: '30px', 
             marginBottom: '100px', 

@@ -27,20 +27,12 @@ class Login extends Component {
     })
     
   }
-
-
-  
-    
+ 
   login = (event) => {
     event.preventDefault();
-    console.log(this.state.users);
-    
-    
-    
-    
+  
     event.target.className += " was-validated";
 
-   
     if( this.state.emailInput.valid === true & this.state.passwordInput.valid === true  )
     if( this.state.users.find(user => user.email === this.state.emailInput.value) )
     if( this.state.users.find(user => user.password === this.state.passwordInput.value)){
